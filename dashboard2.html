@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/html" src="pizzatoppings.html"></script>
+    <script type="text/javascript">
+        google.charts.load("current", {packages:["sankey"]});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var combo1 = JSON.parse(localStorage.getItem('combo1'));
+            var arr = [];
+            for( var key in combo1){
+                var splitArr = [];
+                var keySplit = key.split('-');
+                splitArr[0] = keySplit[0];
+                splitArr[1] = keySplit[1];
+                splitArr[2] = Number(combo1[key]);
+                arr.push(splitArr);
+                splitArr = [];
+
+            }
+            var combo2 = JSON.parse(localStorage.getItem('combo2'));
+
+            for( var key in combo2){
+                var splitArr = [];
+                var keySplit = key.split('-');
+                splitArr[0] = keySplit[0];
+                splitArr[1] = keySplit[1];
+                splitArr[2] = Number(combo2[key]);
+                arr.push(splitArr);
+                splitArr = [];
+
+            }
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'From');
+            data.addColumn('string', 'To');
+            data.addColumn('number', 'Weight');
+            data.addRows(arr);
+
+            // Set chart options
+            var options = {
+                width: 600
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.Sankey(document.getElementById('sankey_multiple'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+<body>
+<div class="well" id="wrapper">
+    <center><h1><strong>Dashboard</strong></h1></center>
+    <div id="sankey_multiple" style="width: 900px; height: 300px;"></div>
+
+
+</div>
+</body>
+
+</html>

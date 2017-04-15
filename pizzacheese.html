@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+        function displaySelecetd()
+        {
+            var Selected = $("input[type='radio'][name='radioselect']:checked").val();
+            var obj = {};
+            if(localStorage.getItem('combo1') != undefined){
+                obj = JSON.parse(localStorage.getItem('combo1'));
+            }else{
+                var tempObj = {};
+                localStorage.setItem('combo1', JSON.stringify(tempObj));
+            }
+
+            var size = localStorage.getItem('SelectedSize');
+            var str = size+'-'+Selected;
+
+            if(obj[str]){
+                var sum  = Number(obj[str]);
+
+                obj[str] = sum + 1;
+
+            }else{
+                obj[str] = 1;
+
+            }
+            localStorage.setItem('combo1', JSON.stringify(obj));
+
+            localStorage.setItem("SelectedCheese", Selected);
+            var forObj = JSON.parse(localStorage.getItem('combo1'));
+            var arr = [];
+            for( var key in forObj){
+                var splitArr = [];
+                var keySplit = key.split('-');
+                splitArr[0] = keySplit[0];
+                splitArr[1] = keySplit[1];
+                splitArr[2] = Number(forObj[key]);
+                arr.push(splitArr);
+                splitArr = [];
+
+            }
+            console.log(arr);
+
+        }
+    </script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="well well-sm" style=" background-image: url('../src/img/blackpizabg.jpg');" id="crust">
+    <center> <h2 style="color:white;"><strong>START BUILDING YOUR PIZZA</strong></h2></center>
+    <center><h3 style="color:white;"><strong>CHOOSE YOUR CHEESE</strong></h3></center>
+
+    <center> <div class="radio">
+        <table>
+            <tr><td> <label style="color:white;"><input type="radio" value="Mozarella" name="radioselect">Mozarella</label></td></tr>
+
+            <br><br>
+            <tr> <td><label style="color:white;"><input type="radio" value="Parmesan" name="radioselect">Parmesan</label></td></tr>
+
+            <br><br>
+            <tr><td> <label style="color:white;"><input type="radio" value="Feta" name="radioselect">Feta</label></td></tr>
+
+            <br><br>
+            <tr> <td><label style="color:white;"><input type="radio" value="Double Cheese" name="radioselect">Double Cheese</label></td></tr>
+
+        </table>
+        <br><br>
+        <button type="button" class="btn btn-success" onclick="displaySelecetd()" >BUILD</button>
+        <br><br>
+    </div>  </center>
+    <ul class="pager">
+        <li><a href="pizzasize.html">Previous</a></li>
+
+        <li><a href="pizzatoppings.html">Next</a></li>
+    </ul>
+
+</div>
+
+</body>
+</html>

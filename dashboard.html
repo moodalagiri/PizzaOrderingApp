@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/html" src="pizzatoppings.html"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+
+            var parentArr = [];
+            var childArr = [];
+            parentArr.push(['Toppings', 'count']);
+            var Obj = JSON.parse(localStorage.getItem('toppings'));
+
+            for(var key in Obj){
+                childArr[0] = key;
+                childArr[1] = Number(Obj[key]);
+                parentArr.push(childArr);
+                childArr = [];
+
+            }
+
+            var data = google.visualization.arrayToDataTable(parentArr);
+
+            var options = {
+                title: 'Toppings Selection'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+
+
+
+
+    </script>
+</head>
+<body>
+<div class="well" id="wrapper">
+    <center><h1><strong>Dashboard</strong></h1></center>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+
+
+</div>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/html" src="pizzacheese.html"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<script>
+
+        function saveDetails() {
+
+
+            var array = $("input[name='SelectedToppings']:checked").map(function () {
+                return this.value;
+            }).get()
+
+
+
+            var localObj = {};
+            localObj = JSON.parse(localStorage.getItem('toppings'));
+            for (var i = 0; i < array.length; i++) {
+                var toppings = array[i];
+                if (localObj[toppings]) {
+                    var sum = Number(localObj[toppings]);
+                    localObj[toppings] = sum + 1;
+                    console.log(sum);
+                } else {
+                    localObj[toppings] = Number(1);
+                    //creating new obj
+                }
+
+            }
+            localStorage.setItem('toppings', JSON.stringify(localObj));
+            console.log(localObj);
+            var obj = {};
+            if(localStorage.getItem('combo2') != undefined){
+                obj = JSON.parse(localStorage.getItem('combo2'));
+            }else{
+                var tempObj = {};
+                localStorage.setItem('combo2', JSON.stringify(tempObj));
+            }
+
+            var cheese = localStorage.getItem('SelectedCheese');
+            for(var a = 0 ; a<array.length; a++){
+                var str = cheese+'-'+array[a];
+                if(obj[str]){
+                    var sum  = Number(obj[str]);
+
+                    obj[str] = sum + 1;
+
+                }else{
+                    obj[str] = 1;
+
+                }
+
+
+            }
+            localStorage.setItem('combo2', JSON.stringify(obj));
+
+        }
+
+
+</script>
+
+
+
+<body>
+<div class="well well-sm" style=" background-image: url('../src/img/blackpizabg.jpg');" id="crust">
+    <center> <h2 style="color:white;"><strong>START BUILDING YOUR PIZZA</strong></h2></center>
+   <center> <h2 style="color:white;"><strong>CHOOSE TOPPINGS</strong></h2></center>
+
+    <div class="checkbox">
+
+     <label  style="color:white;"><input type="checkbox" name="SelectedToppings" value="Cheese">Cheese</label>
+        <br><br>
+
+      <label style="color:white;" > <input type="checkbox" name="SelectedToppings" value="Black Olives">Black Olives</label>
+
+        <br><br>
+           <label style="color:white;"><input type="checkbox"name="SelectedToppings" value="Garlic">Garlic</label>
+
+        <br><br>
+         <label style="color:white;"><input type="checkbox" name="SelectedToppings" value="Green Pepper">Green Pepper</label>
+        <br><br>
+        <label style="color:white;"><input type="checkbox" name="SelectedToppings" value="Mushrooms">Mushrooms</label>
+        <br><br>
+           <label style="color:white;"><input type="checkbox" name="SelectedToppings" value="Onions">Onions</label>
+        <br><br>
+           <label style="color:white;"><input type="checkbox" name="SelectedToppings" value="Spinach">Spinach</label>
+        <br><br>
+        <button type="button" class="btn btn-success" onclick="saveDetails()" >BUILD</button>
+
+    </div>
+    <ul class="pager">
+        <li><a href="pizzacheese.html">Previous</a></li>
+        <li><a href="charts.html">Next</a></li>
+    </ul>
+
+
+</div>
+
+
+
+</body>
+</html>
